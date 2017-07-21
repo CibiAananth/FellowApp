@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="HandheldFriendly" content="true">
+    <meta charset="UTF-8">
+    <title>FellowApp</title>
+	<link rel="icon" href="../../img/fellowapp.jpg">
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../../node_modules/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="../../node_modules/angular/angular.min.js"></script>
+    <script src="../../node_modules/font-awesome-4.7.0/css/font-awesome.min.css"></script>
+    <script src="../../script/controller/PageCtrl.js"></script>
+	<script src="../../node_modules/sweetalert/dist/sweetalert.min.js"></script>
+    
+	<link rel="stylesheet" href="../../node_modules/sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" href="../../node_modules/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../style/test.css">
+    <link rel="stylesheet" href="../../style/bootchat.css">
+	<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+</head>
+
+<body ng-app="myapp" ng-controller="pageCtrl">
+<div class="container container-fluid ">
+    <br>
+    <ul class="nav nav-pills ">
+        <li role="menuitem">
+            <button class="btn btn-default">Home</button>
+        </li>
+        <li role="menuitem">
+            <button class="btn btn-default">Profile</button>
+        </li>
+        <li role="menuitem">
+            <button class="btn btn-default" aria-selected="true">Connections</button>
+        </li>
+        <li class="col-lg-push-5">
+            <form>
+                <input class="form-control" type="number" ng-model="mobile" name="mobile" placeholder="mobile number">
+                <button class="form-control btn btn-default" ng-click="verifymobile(mobile)">Login</button>
+            </form>
+        </li>
+        <li class="pull-right ">
+            <button class="btn btn-default disa">{{loginname | uppercase}}</button>
+        </li>
+    </ul>
+
+    <br>
+	  <!--chat_sidebar-->
+    <div class="main_section">
+        <div class="container">
+            <div class="chat_container">
+                <div class="col-sm-3 chat_sidebar">
+                    <div class="row">
+                        <div id="custom-search-input">
+                            <div class="input-group col-md-12">
+                                <input type="text" ng-model="test" class="  search-query form-control"
+                                       placeholder="Conversation"/>
+                         </div>
+                        </div>
+                        <div class="dropdown all_conversation">
+                            <button class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-weixin" aria-hidden="true"></i>
+                                All Conversations
+                                <span class="caret pull-right"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <li><a href="#"> All Conversation </a>
+                                    <ul class="sub_menu_ list-unstyled">
+                                        <li><a href="#"> All Conversation </a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                        <div class="member_list">
+                            <ul class="list-unstyled" ng-repeat="c in chatdetails | filter:test | orderBy: '-filtertime' ">
+                                <li class="left clearfix" ng-click="messagename(c.name)">
+                                    <span class="chat-img pull-left">
+                     <img ng-src="{{c.img}}" alt="User Avatar" class="img-circle">
+                     </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header_sec">
+                                            <strong class="primary-font ">{{c.name}} </strong> <strong
+                                                class="pull-right">
+                                            {{c.time}}</strong>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+
+                        </ul></div>
+                </div>
+            </div>
+          
+			  <!--message head-->
+            <div class="col-sm-9 message_section">
+                <div class="row">
+                    <div class="new_message_head">
+                        <span class="chat-img1 pull-left">
+                            &nbsp;&nbsp;&nbsp;&nbsp;<img ng-src="{{chatimg}}" alt="User Avatar" class="img-circle">
+                        </span>
+
+                        <div class="pull-left"><p class="namedisplay fa fa-plus-square-o" aria-hidden="true">
+                            {{chatuser}}</p></div>
+                        <div class="pull-right">
+                            <div class="dropdown messageheadermenu">
+                                <button class="messageheadermenu btn btn-primary btn-lg dropdown-toggle" type="button"
+                                        id="dropdownMenu1" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><a href="#" data-toggle="modal" data-target="#status">
+                                        Status
+                                    </a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#rating">Rate Recruiter</a></li>
+                                </ul>
+                                <div class=" modaltext modal fade" id="status" tabindex="-1" role="dialog"
+                                     aria-haspopup="true" aria-expanded="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title">Status</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>One fine body&hellip;</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" modaltext modal fade" id="rating" tabindex="-1" role="dialog"
+                                     aria-haspopup="true" aria-expanded="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title">Rate Recruiter</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <select class="form-control"
+                                                                style="width:70%;font-family:Helvetica Neue, Helvetica, Arial, sans-serif">
+                                                            <option>Choose reason</option>
+                                                            <option>Good</option>
+                                                            <option>Aveage</option>
+                                                            <option>Excellent</option>
+                                                            <option>Poor</option>
+                                                        </select>
+                                                        <br>
+                                                        <label for="comment"></label>
+                                                        <textarea class="form-control" rows="3" cols="inheirt"
+                                                                  id="comment"
+                                                                  placeholder="Enter comments if any"></textarea>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                    Save
+                                                </button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
+					<!--conversation-->
+                    <div class="chat_area">
+                        <ul class="list-unstyled">
+                            <li class="left clearfix">
+                     <span class="chat-img1 pull-left">
+                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg"
+                          alt="User Avatar" class="img-circle">
+                     </span>
+                                <div class="chat-body1 clearfix">
+                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
+                                        in a piece of classical Latin literature from 45 BC, making it over 2000 years
+                                        old. Richard McClintock, a Latin professor at Hampden-Sydney College in
+                                        Virginia.</p>
+                                    <div class="chat_time pull-right">09:40PM</div>
+                                </div>
+                            </li>
+                            <li class="left clearfix">
+                     <span class="chat-img1 pull-left">
+                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg"
+                          alt="User Avatar" class="img-circle">
+                     </span>
+                                <div class="chat-body1 clearfix">
+                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
+                                        in a piece of classical Latin literature from 45 BC, making it over 2000 years
+                                        old. Richard McClintock, a Latin professor at Hampden-Sydney College in
+                                        Virginia.</p>
+                                    <div class="chat_time pull-right">09:40PM</div>
+                                </div>
+                            </li>
+                            <li class="left clearfix">
+                     <span class="chat-img1 pull-left">
+                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg"
+                          alt="User Avatar" class="img-circle">
+                     </span>
+                                <div class="chat-body1 clearfix">
+                                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
+                                        in a piece of classical Latin literature from 45 BC, making it over 2000 years
+                                        old. Richard McClintock, a Latin professor at Hampden-Sydney College in
+                                        Virginia.</p>
+                                    <div class="chat_time pull-right">09:40PM</div>
+                                </div>
+                            </li>
+                            <li class="left clearfix admin_chat" ng-repeat="con in conversation">
+                     <span class="chat-img1 pull-right">
+                     <img ng-src="{{con.img}}" alt="User Avatar" class="img-circle">
+                     </span>
+                                <div class="chat-body1 clearfix">
+                                    <p>{{con.msg}}</p>
+                                    <div class="chat_time pull-left">{{con.msgtime}}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+					<!--chat_area-->
+                    <div class="message_write">
+                        <textarea rows="1" class="form-control" ng-model="messag" name="messag"
+                                  placeholder="type a message"></textarea>
+                        <div class="clearfix"></div>
+                        <div class="chat_bottom"><a href="#" class="pull-left upload_btn"><i class="fa fa-cloud-upload"
+                                                                                             aria-hidden="true"></i>
+                            Add Files</a>
+                            <a href="#" class="pull-right btn btn-success" ng-click="msgsend()">
+                                Send</a></div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+</body>
+</html>
